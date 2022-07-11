@@ -18,7 +18,8 @@ outputs:
 
   - name:  {{ name|lower }}
     build:
-      script: python -m pip install . -vv
+      noarch: python
+      script: 'python -m pip install . --no-deps --ignore-installed -vvv '
     requirements:
       host:
         - pip
@@ -34,14 +35,14 @@ outputs:
       commands:
         - pip check
   
-  - name: {{ name|lower }}.code
-    requirements:
-      run:
-        - {{ pin_subpackage(name|lower, exact=True) }}
-        - nwchem =7
-    test:
-      imports:
-        - aiida_nwchem
+  # - name: {{ name|lower }}.code
+  #   requirements:
+  #     run:
+  #       - {{ pin_subpackage(name|lower, exact=True) }}
+  #       - nwchem =7
+  #   test:
+  #     imports:
+  #       - aiida_nwchem
 
 about:
   home: https://github.com/aiidateam/aiida-nwchem
