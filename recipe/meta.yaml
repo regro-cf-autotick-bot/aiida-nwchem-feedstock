@@ -1,6 +1,6 @@
 {% set name = "aiida-nwchem" %}
 {% set version = "2.1.0" %}
-{% set build = 1 %}
+{% set build = 2 %}
 
 package:
   name: {{ name|lower }}-meta
@@ -12,12 +12,12 @@ source:
 
 build:
   number: {{ build }}
-  noarch: python
 
 outputs:
 
   - name:  {{ name|lower }}
     build:
+      noarch: python
       script: 'python -m pip install . --no-deps --ignore-installed -vvv '
     requirements:
       host:
@@ -35,6 +35,8 @@ outputs:
         - pip check
   
   - name: {{ name|lower }}.code
+    build:
+      noarch: python
     requirements:
       run:
         - {{ pin_subpackage(name|lower, exact=True) }}
