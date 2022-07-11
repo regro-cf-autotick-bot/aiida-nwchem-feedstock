@@ -35,9 +35,18 @@ outputs:
   
   - name: {{ name|lower }}.code
     requirements:
+      host:
+        - pip
+        - python >=3.7
+        - reentry
       run:
         - {{ pin_subpackage(name|lower, exact=True) }}
         - nwchem =7
+    test:
+      imports:
+        - aiida_nwchem
+      commands:
+        - pip check
 
 about:
   home: https://github.com/aiidateam/aiida-nwchem
