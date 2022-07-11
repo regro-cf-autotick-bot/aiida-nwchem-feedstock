@@ -22,7 +22,7 @@ outputs:
     requirements:
       host:
         - pip
-        - python >=3.7
+        - python >=3.7,<3.10
         - reentry
       run:
         - aiida-core.atomic_tools >=1.2.1,<2
