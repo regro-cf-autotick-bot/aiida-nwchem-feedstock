@@ -1,9 +1,10 @@
 {% set name = "aiida-nwchem" %}
 {% set version = "2.1.0" %}
-{% set build = 2 %}
+{% set build = 3 %}
+{% set name_code = name + ".code" %}
 
 package:
-  name: {{ name|lower }}-meta
+  name: {{ name }}.meta
   version: {{ version }}
 
 source:
@@ -12,10 +13,16 @@ source:
 
 build:
   number: {{ build }}
+  noarch: python
+
+requirements:
+  run:
+  - {{ pin_subpackage(name, exact=True) }}
+  - {{ pin_subpackage(name_code, exact=True) }}
 
 outputs:
 
-  - name:  {{ name|lower }}
+  - name:  {{ name }}
     build:
       noarch: python
       script: 'python -m pip install . --no-deps --ignore-installed -vvv '
@@ -28,22 +35,25 @@ outputs:
         - aiida-core.atomic_tools >=1.2.1,<2
         - numpy
         - python >=3.7
+      run_constrained:
+        - {{ name_code }} =={{ version }}
     test:
       imports:
         - aiida_nwchem
       commands:
         - pip check
+      requires:
+        - pip
   
-  - name: {{ name|lower }}.code
+  - name: {{ name_code }}
     build:
       noarch: python
     requirements:
       run:
-        - {{ pin_subpackage(name|lower, exact=True) }}
         - nwchem =7
     test:
-      imports:
-        - aiida_nwchem
+      commands:
+        - which nwchem
 
 about:
   home: https://github.com/aiidateam/aiida-nwchem
