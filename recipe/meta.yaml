@@ -1,6 +1,6 @@
 {% set name = "aiida-nwchem" %}
-{% set version = "2.1.0" %}
-{% set build = 3 %}
+{% set version = "3.0.1" %}
+{% set build = 0 %}
 {% set name_code = name + ".code" %}
 
 package:
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aiida_nwchem-{{ version }}.tar.gz
-  sha256: 33ecc7b012ad05b4f3a2bd8e7c11abfe4a15083f9c5fd00250f64b048d73897c
+  sha256: 9c9c13b5e46e3b94c65ce4f0f3391bd4afeb854046918c45ebff67b12ecb0373
 
 build:
   number: {{ build }}
@@ -17,12 +17,12 @@ build:
 
 requirements:
   run:
-  - {{ pin_subpackage(name, exact=True) }}
-  - {{ pin_subpackage(name_code, exact=True) }}
+    - {{ pin_subpackage(name, exact=True) }}
+    - {{ pin_subpackage(name_code, exact=True) }}
 
 outputs:
 
-  - name:  {{ name }}
+  - name: {{ name }}
     build:
       noarch: python
       script: 'python -m pip install . --no-deps --ignore-installed -vvv '
@@ -44,7 +44,7 @@ outputs:
         - pip check
       requires:
         - pip
-  
+
   - name: {{ name_code }}
     build:
       noarch: python
